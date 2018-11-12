@@ -29,7 +29,7 @@ You can install my version of the powers package from github from:
 devtools::install_github("STAT545-UBC-students/hw07-rachlobay/powers-master")
 ```
 
-## Example
+## Examples of the functions in the package
 
 See the vignette for more extensive use, but here's an example of the reciprocal function that shows the reciprocal of 2 (which we expect to be 0.5).
 
@@ -39,14 +39,14 @@ powers::reciprocal(2)
 
 The following are examples of the of the cube and square functions on the even numbers 2, 4, 6, 8, 10.
 
-```{r example}
+```{r}
 powers::cube(c(2,4,6,8,10))
 powers::square(c(2,4,6,8,10))
 ```
 
 Here is an example of a basic use of the boxcox.transform() function in the powers package. This example has the positive data values in a vector, x, of 1,2,3,4,5. The lambda parameter, which is a measure of the strength of the boxcox transformation, is set to 3.
 
-```{r example}
+```{r}
 x = 1:5
 powers::boxcox.transform(x, lambda = 3)
 ```
