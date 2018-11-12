@@ -16,6 +16,6 @@ Imports: ggplot2
 VignetteBuilder: knitr
 Depends: R(>= 2.10.0)
 NeedsCompilation: no
-Packaged: 2018-11-12 05:46:03 UTC; admin
+Packaged: 2018-11-12 22:02:41 UTC; admin
 Author: Vincenzo Coia [aut, cre]
 Maintainer: Vincenzo Coia <vincen.coia@stat.ubc.ca>

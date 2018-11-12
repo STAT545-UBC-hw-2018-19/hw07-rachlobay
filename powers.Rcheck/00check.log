@@ -58,21 +58,21 @@ structure’ in the ‘Writing R Extensions’ manual.
 * checking examples ... OK
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... ERROR
-  Running ‘testthat.R’
+  Running ‘testthat.R’ [4s/12s]
 Running the tests in ‘tests/testthat.R’ failed.
 Last 13 lines of output:
-  7: getNamespace(ns)
-  8: tryCatch(loadNamespace(name), error = function(e) stop(e))
-  9: tryCatchList(expr, classes, parentenv, handlers)
-  10: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-  11: value[[3L]](cond)
+         e$expectation_calls <- frame_calls(11, 2)
+         test_error <<- e
+         register_expectation(e)
+         e$handled <- TRUE
+         test_error <<- e
+     }, "unused argument (repos = \"http://cran.us.r-project.org\")", quote(oldr::install.compatible.packages("bimixt", 
+         repos = "http://cran.us.r-project.org"))) at testthat/test_invboxcoxtransform.R:3
+  2: eval(code, test_env)
   
-  ══ testthat results  ═════════════════════
-  OK: 5 SKIPPED: 0 FAILED: 4
-  1. Error: a single postive, zero, or negative lambda works (@test_boxcoxtransform.R#10) 
-  2. Error: a vector of lambda values works. (@test_boxcoxtransform.R#21) 
-  3. Error: a vector of lambda values works. (@test_boxcoxtransform.R#31) 
-  4. Error: a vector of negative x values will be made positive automatically and manually by boxcox.transform. (@test_boxcoxtransform.R#40) 
+  ══ testthat results  ═════════════════════════════════════════════════════════
+  OK: 26 SKIPPED: 0 FAILED: 1
+  1. Error: (unknown) (@test_invboxcoxtransform.R#3) 
   
   Error: testthat unit tests failed
   Execution halted

@@ -39,8 +39,13 @@ powers::reciprocal(2)
 
 The following are examples of the of the cube and square functions on the even numbers 2, 4, 6, 8, 10.
 
+
 ```{r}
 powers::cube(c(2,4,6,8,10))
+```
+
+```{r}
+
 powers::square(c(2,4,6,8,10))
 ```
 
@@ -69,6 +74,43 @@ That said, the user could specify what constant they wish to add to each x value
 powers::boxcox.transform(x = -5:5, lambda = c(0,1), makepos = 10)
 ```
 
+Since the package contains the box-cox transformation, it only makes sense to include the inverse box-cox transformation.
+
+```{r}
+powers::inv.boxcox.transform(x = 5:10, lambda = c(0,1))
+```
+
+As was the case for the boxcox.transform funtion, the user can specify the makepos number. 
+
+```{r}
+powers::inv.boxcox.transform(x = -5:10, lambda = 6, makepos = 6)
+```
+
+Otherwise, if the x (data) vector has any negative values, the function will automatically make 'em all positive by adding the minimum constant. 
+
+```{r}
+powers::inv.boxcox.transform(x = -5:10, lambda = 6)
+```
+
+The final function in this package is a two-parameter box-cox transformation. So there are two lambdas, lambda1 and lambda2, that the user should specify. 
+
+```{r}
+powers::two.param.boxcox.transform(x = 1:5, lambda1 = 6, lambda2 = 10)
+```
+
+Following the trend of the other two functions, if x is negative, the user may specify the makepos value. 
+
+```{r}
+powers::two.param.boxcox.transform(x = -1:5, lambda1 = 6, lambda2 = 10, makepos = 2)
+```
+
+Otherwise, the minimum constant will be added to all of the x values to make them all positive. 
+
+```{r}
+powers::two.param.boxcox.transform(x = -1:5, lambda1 = 6, lambda2 = 10)
+```
+
+In this case, the minimum cosntant to add was 2 to make all x values positive. So, whether we set makepos to 2 or if we don't, we get the same output.
 
 ## For Developers
 

@@ -1,6 +1,12 @@
 boxcox.tranform.mat     Box-Cox Transform Matrix of Values Function
 boxcox.transform        Box-Cox Transform Function
+inv.boxcox.tranform.mat
+                        Inverse Box-Cox Transform Matrix of Values
+                        Function
+inv.boxcox.transform    Inverse Box-Cox Transform Function
 pow                     Generic Power Function
 powers                  Convenient Computation of Powers
 square                  Apply a useful power
 tenvec                  Integer vector from 1 to 10
+two.param.boxcox.transform
+                        Two Parameter Box-Cox Transform Function

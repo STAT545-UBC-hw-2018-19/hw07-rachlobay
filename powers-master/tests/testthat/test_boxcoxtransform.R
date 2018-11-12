@@ -1,7 +1,8 @@
+install.packages("foreign",  repos='http://cran.us.r-project.org')
+library(foreign)
 context("Box cox transformations for different x and lambdas.")
 
-
-test_that("a single postive, zero, or negative lambda works", {
+test_that("a single positive, zero, or negative lambda works", {
     x = 1:10
     lambda4 = 4
     lambda0 = 0
@@ -22,15 +23,6 @@ test_that("a vector of lambda values works.", {
     expect_identical(boxcox.transform(x,lambda_vec_12345), car:::bcPower(matrix(rep(x,length(lambda_vec_12345)), ncol = length(lambda_vec_12345)),lambda_vec_12345))
 })
 
-
-test_that("a vector of lambda values works.", {
-    x = 1:5
-    lambda_vec_02 <- c(0, 2)
-    lambda_vec_12345 <- c(-1,2,3,4,5)
-
-    expect_identical(boxcox.transform(x,lambda_vec_02), car:::bcPower(matrix(rep(x,length(lambda_vec_02)), ncol = length(lambda_vec_02)),lambda_vec_02))
-    expect_identical(boxcox.transform(x,lambda_vec_12345), car:::bcPower(matrix(rep(x,length(lambda_vec_12345)), ncol = length(lambda_vec_12345)),lambda_vec_12345))
-})
 
 test_that("a vector of negative x values will be made positive automatically and manually by boxcox.transform.", {
     x = -5:5

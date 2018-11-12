@@ -6,7 +6,7 @@
 #' @param lambda strength of the transformation. Default is 0. May be a single value or a vector for this function.
 #' @param makepos the constant value that should be added to each `x`  to make all x positive. Default is 0.
 #'
-#' @return A vector of the values that have been transformed. If lambda is a 0 value, returns the `log(x)`. If lambda is non-0 value, returns `(x^lamba - 1) / lambda`. When lambda is a vector, a marrix of values that were transformed with each column of the matrix corresponds to a lambda.
+#' @return A vector of the values that have been transformed. If lambda is a 0 value, returns the `log(x)`. If lambda is non-0 value, returns `(x^lamba - 1) / lambda`. When lambda is a vector, a matrix of values that were transformed with each column of the matrix corresponds to a lambda.
 #' @export
 
 boxcox.transform <- function(x, lambda = 0, makepos = 0) {
@@ -21,6 +21,7 @@ boxcox.transform <- function(x, lambda = 0, makepos = 0) {
 # Negative x-value automatic change of makepos argument to add the minimum constant to make all x values non-negative
     if(any(x < 0)){
         x = x + abs(min(x)) + 1
+        warning("the minimum constant value was automatically added to each data value to make all data values positive.")
     }
 
 # Box-Cox Function Computations

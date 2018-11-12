@@ -7,14 +7,14 @@
 boxcox.transform(x, lambda = 0, makepos = 0)
 }
 \arguments{
-\item{x}{vector that is to be transformed under the box-cox function.}
+\item{x}{vector that is to be transformed under the box-cox function. All x must be positive.}
 
 \item{lambda}{strength of the transformation. Default is 0. May be a single value or a vector for this function.}
 
-\item{makepos}{the constant value that should be added to each `x`  to make them positive. Default is 0.}
+\item{makepos}{the constant value that should be added to each `x`  to make all x positive. Default is 0.}
 }
 \value{
-A vector of the values that have been transformed. If lambda is a 0 value, returns the `log(x)`. If lambda is non-0 value, returns `(x^lamba - 1) / lambda`. When lambda is a vector, a marrix of values that were transformed with each column of the matrix corresponds to a lambda.
+A vector of the values that have been transformed. If lambda is a 0 value, returns the `log(x)`. If lambda is non-0 value, returns `(x^lamba - 1) / lambda`. When lambda is a vector, a matrix of values that were transformed with each column of the matrix corresponds to a lambda.
 }
 \description{
 Given a variable, the Box-Cox power transformation is obtained.

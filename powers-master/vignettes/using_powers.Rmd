@@ -45,9 +45,9 @@ reciprocal(1:10, plot_it=TRUE)
 
 Wow!!!
 
-## Beyond the basic transformations - introducing boxcox.transform
+## Beyond the basic transformations - introducing the box-cox transform
 
-The boxcox transformation is based on the old `box.cox()` function from the car package ([see here for that function's documentation](https://www.rdocumentation.org/packages/car/versions/1.1-1/topics/box.cox)). Basically, what want to do is to compute a box-cox transformation of a variable, which is a type of power transformation. The box-cox transformation depends on the lambda (λ) parameter value(s). The box-cox function is defined as x' = (x^λ - 1) / λ when λ ≠ 0 and x' = log x when λ = 0. 
+The boxcox transformation is based on the old `box.cox()` function from the car package ([see here for that function's documentation](https://www.rdocumentation.org/packages/car/versions/1.1-1/topics/box.cox)). Basically, what want to do is to compute a box-cox transformation of a variable, which is a type of power transformation. The box-cox transformation depends on the lambda (λ) parameter value(s). The box-cox function is defined as x' = (x^λ - 1) / λ when λ ≠ 0 and x' = log x when λ = 0. The default value for lambda in the function is 0.
 
 Let's see the box-cox function in action!
 
@@ -100,3 +100,65 @@ boxcox.transform(x = -5:2, lambda = 4)
 ```
 
 As we expected, when makepos is an insufficient number to make all the x values positive, the output of the boxcox.transform() function is the same when you have that makepos argument and when you don't.
+
+## Beyond the basic transformations - introducing the inverse box-cox transformation
+
+Next, we will move on to the inverse box-cox transformation function. That inverse function is defined as The box-cox transformation depends on the lambda (λ) parameter value(s). The box-cox function is defined as x' = (λ*x + 1)^(1/λ) when λ ≠ 0 and x' = exp(x) when λ = 0. 
+
+As was the case with the box-cox transformation function, the user must input a value of vectors, x and a lambda value. The default value for lambda is 0. 
+
+```{r}
+inv.boxcox.transform(x = 1:5, lambda = 2)
+```
+
+Similar to the boxcox.transform function, lambda may be a vector of values. In that case, the output will be a matrix, where each column corresponds to a different lambda value (and is labelled to indicate which lambda).
+
+```{r}
+inv.boxcox.transform(x = 1:5, lambda = c(2,4,6,8,10))
+```
+
+As was the case with the boxcox.transform function, we kept the condition that all the x values must be positive. Hence, the user may specify the makepos argument to make all the x values positive manually. 
+
+```{r}
+inv.boxcox.transform(x = -5:5, lambda = 2, makepos = 7)
+```
+
+If the user doesn't specify the makepos parameter, all the x-values will be made positive automatically by using the minimum possible constant to add to each of the values.
+
+```{r}
+inv.boxcox.transform(x = -5:5, lambda = 2)
+```
+
+## Beyond the basic transformations - introducing the two parameter box-cox transformation
+
+The last function in the package to be discussed is the two parameter box-cox transformation, two.param.boxcox.transform().  The two parameters in the function are lambda1 and lambda2. The two parameter box-cox transformation is defined as x' = ((x+λ2)^λ1 - 1) / λ1 when λ1 ≠ 0 and x' = log(x + λ2) when λ1 = 0. The default values for lambda1 and lambda2 are both 0.
+
+```{r}
+two.param.boxcox.transform(x = 1:10, lambda1 = 2, lambda2 = 7)
+```
+
+Notice that if lambda2 is 0, then we get the basic one paramter box-cox transformation. Compare the outputs of the boxcox.transform and two.param.boxcox.transform when lambda2 is not specified (default is 0). We expect that the outputs should be the same.
+
+```{r}
+boxcox.transform(x = 1:10, lambda = 4)
+```
+
+```{r}
+two.param.boxcox.transform(x = 1:10, lambda1 = 4)
+```
+
+Precisely the same, as we expected. 
+
+Similar to our other box-cox transformations, if any value of the x vector is negative, the function will automatically add the minimum constant necessary to make all of the x values positive if the makepos parameter is not specified.
+
+```{r}
+two.param.boxcox.transform(x = -10:10, lambda1 = -5, lambda2 = 6)
+```
+
+However, the function user can, of course, specify the makepos parameter.
+
+```{r}
+two.param.boxcox.transform(x = -10:10, lambda1 = -5, lambda2 = 6, makepos = 11)
+```
+
+For the above two cases, we see that if we specify makepos = 11, that is the minimum constant that can be added to each value of x, which ranges from -10 to 10, such that all values of x will be positive. Hence, the output when we set makepos to be 11 is the same as when we don't specify makepos at all.

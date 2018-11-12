@@ -12,7 +12,7 @@
 
 <meta name="author" content="Vincenzo Coia" />
 
-<meta name="date" content="2018-11-11" />
+<meta name="date" content="2018-11-12" />
 
 <title>Using the powers package</title>
 
@@ -70,13 +70,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Using the <code>powers</code> package</h1>
 <h4 class="author"><em>Vincenzo Coia</em></h4>
-<h4 class="date"><em>2018-11-11</em></h4>
+<h4 class="date"><em>2018-11-12</em></h4>
 
 
 
 <p><strong>Note</strong>: This package isn’t actually meant to be “serious”. I made it just for teaching purposes.</p>
 <p>Want to compute powers without having to use <code>^</code> or <code>**</code>? Give <code>sqrt</code> some friends by loading the <code>powers</code> package!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(powers)</code></pre></div>
+<div id="basic-square-cube-or-reciprocal-transformations" class="section level2">
+<h2>Basic square, cube or reciprocal transformations</h2>
 <p>Want squares, cubes, or reciprocals? Easy.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">square</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</code></pre></div>
 <pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
@@ -113,6 +115,137 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>##  [1] 1.0000000 0.5000000 0.3333333 0.2500000 0.2000000 0.1666667 0.1428571
 ##  [8] 0.1250000 0.1111111 0.1000000</code></pre>
 <p>Wow!!!</p>
+</div>
+<div id="beyond-the-basic-transformations---introducing-the-box-cox-transform" class="section level2">
+<h2>Beyond the basic transformations - introducing the box-cox transform</h2>
+<p>The boxcox transformation is based on the old <code>box.cox()</code> function from the car package (<a href="https://www.rdocumentation.org/packages/car/versions/1.1-1/topics/box.cox">see here for that function’s documentation</a>). Basically, what want to do is to compute a box-cox transformation of a variable, which is a type of power transformation. The box-cox transformation depends on the lambda (λ) parameter value(s). The box-cox function is defined as x’ = (x^λ - 1) / λ when λ ≠ 0 and x’ = log x when λ = 0. The default value for lambda in the function is 0.</p>
+<p>Let’s see the box-cox function in action!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda =</span> <span class="dv">4</span>)</code></pre></div>
+<pre><code>##  [1]    0.00    3.75   20.00   63.75  156.00  323.75  600.00 1023.75
+##  [9] 1640.00 2499.75</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">8</span>, <span class="dt">lambda =</span> <span class="op">-</span><span class="dv">20</span>)</code></pre></div>
+<pre><code>## [1] 0.04999995 0.05000000 0.05000000 0.05000000 0.05000000 0.05000000
+## [7] 0.05000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">8</span><span class="op">:</span><span class="dv">16</span>, <span class="dt">lambda =</span> <span class="dv">0</span>)</code></pre></div>
+<pre><code>## [1] 2.079442 2.197225 2.302585 2.397895 2.484907 2.564949 2.639057 2.708050
+## [9] 2.772589</code></pre>
+<p>Additionally, lambda may be a vector! If lambda is a vector of values, then the output will be a matrix of values where each column corresponds to a different lambda value (and is named to indicate what lambda is being used).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>##            Z1^0 Z2^2
+##  [1,] 0.0000000  0.0
+##  [2,] 0.6931472  1.5
+##  [3,] 1.0986123  4.0
+##  [4,] 1.3862944  7.5
+##  [5,] 1.6094379 12.0
+##  [6,] 1.7917595 17.5
+##  [7,] 1.9459101 24.0
+##  [8,] 2.0794415 31.5
+##  [9,] 2.1972246 40.0
+## [10,] 2.3025851 49.5</code></pre>
+<p>That example was quite simple. Let’s try out bunch of different negative positive values in a lambda vector.</p>
+<p>You can see with the below example that the function can be quite powerful. You only need to edit one line to produce box-cox transformations of a data vector that use different lambda values. Furthermore, you are able to view and further manipulate all the transformed data values that correspond to the different lambda values in one handy matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">100</span>,<span class="op">-</span><span class="dv">10</span>,<span class="op">-</span><span class="dv">5</span>,<span class="op">-</span><span class="dv">2</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">100</span>))</code></pre></div>
+<pre><code>##       Z1^-100     Z2^-10     Z3^-5     Z4^-2     Z5^-1      Z6^0 Z7^1 Z8^2
+##  [1,]    0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000    0  0.0
+##  [2,]    0.01 0.09990234 0.1937500 0.3750000 0.5000000 0.6931472    1  1.5
+##  [3,]    0.01 0.09999831 0.1991770 0.4444444 0.6666667 1.0986123    2  4.0
+##  [4,]    0.01 0.09999990 0.1998047 0.4687500 0.7500000 1.3862944    3  7.5
+##  [5,]    0.01 0.09999999 0.1999360 0.4800000 0.8000000 1.6094379    4 12.0
+##  [6,]    0.01 0.10000000 0.1999743 0.4861111 0.8333333 1.7917595    5 17.5
+##  [7,]    0.01 0.10000000 0.1999881 0.4897959 0.8571429 1.9459101    6 24.0
+##  [8,]    0.01 0.10000000 0.1999939 0.4921875 0.8750000 2.0794415    7 31.5
+##  [9,]    0.01 0.10000000 0.1999966 0.4938272 0.8888889 2.1972246    8 40.0
+## [10,]    0.01 0.10000000 0.1999980 0.4950000 0.9000000 2.3025851    9 49.5
+##          Z9^5       Z10^10      Z11^100
+##  [1,]     0.0          0.0 0.000000e+00
+##  [2,]     6.2        102.3 1.267651e+28
+##  [3,]    48.4       5904.8 5.153775e+45
+##  [4,]   204.6     104857.5 1.606938e+58
+##  [5,]   624.8     976562.4 7.888609e+67
+##  [6,]  1555.0    6046617.5 6.533186e+75
+##  [7,]  3361.2   28247524.8 3.234477e+82
+##  [8,]  6553.4  107374182.3 2.037036e+88
+##  [9,] 11809.6  348678440.0 2.656140e+93
+## [10,] 19999.8  999999999.9 1.000000e+98</code></pre>
+<p>Note that the values of the vector, x, that we want to transform under boxcox.transform must be positive. I have made it so that if x is a vector of negative values the minimum constant will be added so that the x vector values are all positive.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">lambda =</span> <span class="dv">4</span>)</code></pre></div>
+<pre><code>## Warning in boxcox.transform(x = -5:2, lambda = 4): the minimum constant
+## value was automatically added to each data value to make all data values
+## positive.</code></pre>
+<pre><code>## [1]    0.00    3.75   20.00   63.75  156.00  323.75  600.00 1023.75</code></pre>
+<p>So, you can see why I added a third parameter called makepos to the boxcox.transform function. This makepos parameter lets you input a value to make the vector that you input positve.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">lambda =</span> <span class="dv">4</span>, <span class="dt">makepos =</span> <span class="dv">9</span>)</code></pre></div>
+<pre><code>## [1]   63.75  156.00  323.75  600.00 1023.75 1640.00 2499.75 3660.00</code></pre>
+<p>If you set makepos to a value such that the x vector of values is still negative, I have made the function so that it will automatically add the minimum constant to every x value to make all the x values positive. Also, I made it so that a warning message indicating as such will be displayed for the person who is trying to use the function.</p>
+<p>Let’s try out that rookie mistake.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">lambda =</span> <span class="dv">4</span>, <span class="dt">makepos =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## Warning in boxcox.transform(x = -5:2, lambda = 4, makepos = 2): the minimum
+## constant value was automatically added to each data value to make all data
+## values positive.</code></pre>
+<pre><code>## [1]    0.00    3.75   20.00   63.75  156.00  323.75  600.00 1023.75</code></pre>
+<p>Clearly, in the above function, when makepos is 2, adding 2 to -5,-4,-3,or -2 isn’t enough to make those values positive. So, that’s where the minimum automatic addition of the smallest constant to make all the x values positive comes into play.</p>
+<p>By what I mentioned above, we would expect the above function would yield the same output as when we don’t have a makepos argument at all.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">lambda =</span> <span class="dv">4</span>)</code></pre></div>
+<pre><code>## Warning in boxcox.transform(x = -5:2, lambda = 4): the minimum constant
+## value was automatically added to each data value to make all data values
+## positive.</code></pre>
+<pre><code>## [1]    0.00    3.75   20.00   63.75  156.00  323.75  600.00 1023.75</code></pre>
+<p>As we expected, when makepos is an insufficient number to make all the x values positive, the output of the boxcox.transform() function is the same when you have that makepos argument and when you don’t.</p>
+</div>
+<div id="beyond-the-basic-transformations---introducing-the-inverse-box-cox-transformation" class="section level2">
+<h2>Beyond the basic transformations - introducing the inverse box-cox transformation</h2>
+<p>Next, we will move on to the inverse box-cox transformation function. That inverse function is defined as The box-cox transformation depends on the lambda (λ) parameter value(s). The box-cox function is defined as x’ = (λ*x + 1)^(1/λ) when λ ≠ 0 and x’ = exp(x) when λ = 0.</p>
+<p>As was the case with the box-cox transformation function, the user must input a value of vectors, x and a lambda value. The default value for lambda is 0.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv.boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">lambda =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 1.732051 2.236068 2.645751 3.000000 3.316625</code></pre>
+<p>Similar to the boxcox.transform function, lambda may be a vector of values. In that case, the output will be a matrix, where each column corresponds to a different lambda value (and is labelled to indicate which lambda).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv.boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">lambda =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>))</code></pre></div>
+<pre><code>##             2        4        6        8       10
+## [1,] 1.732051 1.495349 1.383088 1.316074 1.270982
+## [2,] 2.236068 1.732051 1.533406 1.424971 1.355882
+## [3,] 2.645751 1.898829 1.633524 1.495349 1.409731
+## [4,] 3.000000 2.030543 1.709976 1.548154 1.449701
+## [5,] 3.316625 2.140695 1.772394 1.590736 1.481689</code></pre>
+<p>As was the case with the boxcox.transform function, we kept the condition that all the x values must be positive. Hence, the user may specify the makepos argument to make all the x values positive manually.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv.boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">lambda =</span> <span class="dv">2</span>, <span class="dt">makepos =</span> <span class="dv">7</span>)</code></pre></div>
+<pre><code>##  [1] 2.236068 2.645751 3.000000 3.316625 3.605551 3.872983 4.123106
+##  [8] 4.358899 4.582576 4.795832 5.000000</code></pre>
+<p>If the user doesn’t specify the makepos parameter, all the x-values will be made positive automatically by using the minimum possible constant to add to each of the values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inv.boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">lambda =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## Warning in inv.boxcox.transform(x = -5:5, lambda = 2): the minimum constant
+## value was automatically added to each data value to make all data values
+## positive.</code></pre>
+<pre><code>##  [1] 1.732051 2.236068 2.645751 3.000000 3.316625 3.605551 3.872983
+##  [8] 4.123106 4.358899 4.582576 4.795832</code></pre>
+</div>
+<div id="beyond-the-basic-transformations---introducing-the-two-parameter-box-cox-transformation" class="section level2">
+<h2>Beyond the basic transformations - introducing the two parameter box-cox transformation</h2>
+<p>The last function in the package to be discussed is the two parameter box-cox transformation, two.param.boxcox.transform(). The two parameters in the function are lambda1 and lambda2. The two parameter box-cox transformation is defined as x’ = ((x+λ2)^λ1 - 1) / λ1 when λ1 ≠ 0 and x’ = log(x + λ2) when λ1 = 0. The default values for lambda1 and lambda2 are both 0.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">two.param.boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda1 =</span> <span class="dv">2</span>, <span class="dt">lambda2 =</span> <span class="dv">7</span>)</code></pre></div>
+<pre><code>##  [1]  31.5  40.0  49.5  60.0  71.5  84.0  97.5 112.0 127.5 144.0</code></pre>
+<p>Notice that if lambda2 is 0, then we get the basic one paramter box-cox transformation. Compare the outputs of the boxcox.transform and two.param.boxcox.transform when lambda2 is not specified (default is 0). We expect that the outputs should be the same.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda =</span> <span class="dv">4</span>)</code></pre></div>
+<pre><code>##  [1]    0.00    3.75   20.00   63.75  156.00  323.75  600.00 1023.75
+##  [9] 1640.00 2499.75</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">two.param.boxcox.transform</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda1 =</span> <span class="dv">4</span>)</code></pre></div>
+<pre><code>##  [1]    0.00    3.75   20.00   63.75  156.00  323.75  600.00 1023.75
+##  [9] 1640.00 2499.75</code></pre>
+<p>Precisely the same, as we expected.</p>
+<p>Similar to our other box-cox transformations, if any value of the x vector is negative, the function will automatically add the minimum constant necessary to make all of the x values positive if the makepos parameter is not specified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">two.param.boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda1 =</span> <span class="op">-</span><span class="dv">5</span>, <span class="dt">lambda2 =</span> <span class="dv">6</span>)</code></pre></div>
+<pre><code>## Warning in two.param.boxcox.transform(x = -10:10, lambda1 = -5, lambda2 =
+## 6): the minimum constant value was automatically added to each data value
+## to make all data values positive.</code></pre>
+<pre><code>##  [1] 0.1999881 0.1999939 0.1999966 0.1999980 0.1999988 0.1999992 0.1999995
+##  [8] 0.1999996 0.1999997 0.1999998 0.1999999 0.1999999 0.1999999 0.1999999
+## [15] 0.2000000 0.2000000 0.2000000 0.2000000 0.2000000 0.2000000 0.2000000</code></pre>
+<p>However, the function user can, of course, specify the makepos parameter.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">two.param.boxcox.transform</span>(<span class="dt">x =</span> <span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">lambda1 =</span> <span class="op">-</span><span class="dv">5</span>, <span class="dt">lambda2 =</span> <span class="dv">6</span>, <span class="dt">makepos =</span> <span class="dv">11</span>)</code></pre></div>
+<pre><code>##  [1] 0.1999881 0.1999939 0.1999966 0.1999980 0.1999988 0.1999992 0.1999995
+##  [8] 0.1999996 0.1999997 0.1999998 0.1999999 0.1999999 0.1999999 0.1999999
+## [15] 0.2000000 0.2000000 0.2000000 0.2000000 0.2000000 0.2000000 0.2000000</code></pre>
+<p>For the above two cases, we see that if we specify makepos = 11, that is the minimum constant that can be added to each value of x, which ranges from -10 to 10, such that all values of x will be positive. Hence, the output when we set makepos to be 11 is the same as when we don’t specify makepos at all.</p>
+</div>
 
 
 
