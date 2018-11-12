@@ -22,11 +22,11 @@ This is an R package that gives `sqrt()` friends by providing other power functi
 
 ## Installation
 
-You can install powers from github with:
+You can install my version of the powers from github from:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("vincenzocoia/powers")
+devtools::install_github("STAT545-UBC-students/hw07-rachlobay/powers-master")
 ```
 
 ## Example
