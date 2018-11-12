@@ -18,11 +18,11 @@ __Note__: This R package is not mean to be "serious". It's just for teaching pur
 
 # powers
 
-This is an R package that gives `sqrt()` friends by providing other power functions.
+This is an R package that gives `sqrt()` friends by providing other power functions. Additionally, I have added a box-cox transformation function that gives the boxcox power transformation of the data values, when a choice of lambda is indicated. 
 
 ## Installation
 
-You can install my version of the powers from github from:
+You can install my version of the powers package from github from:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
@@ -31,11 +31,44 @@ devtools::install_github("STAT545-UBC-students/hw07-rachlobay/powers-master")
 
 ## Example
 
-See the vignette for more extensive use, but here's an example:
+See the vignette for more extensive use, but here's an example of the reciprocal function that shows the reciprocal of 2 (which we expect to be 0.5).
 
 ```{r example}
 powers::reciprocal(2)
 ```
+
+The following are examples of the of the cube and square functions on the even numbers 2, 4, 6, 8, 10.
+
+```{r example}
+powers::cube(c(2,4,6,8,10))
+powers::square(c(2,4,6,8,10))
+```
+
+Here is an example of a basic use of the boxcox.transform() function in the powers package. This example has the positive data values in a vector, x, of 1,2,3,4,5. The lambda parameter, which is a measure of the strength of the boxcox transformation, is set to 3.
+
+```{r example}
+x = 1:5
+powers::boxcox.transform(x, lambda = 3)
+```
+
+It is important to note that the lambda argument may be a vector of values. In this case, the output will be a matrix of transformed data values, where each column corresponds to a different lambda value. Notice that the columns are labelled to indicate which lambda value each refers to.
+
+```{r}
+powers::boxcox.transform(x = 1:5, lambda = c(0,1))
+```
+
+Finally, I will finish off with an examplex of the boxcox.transform function where the data values are not strictly positive. In this case, if the user doesn't specify what constant they wish to add to each of the data (x) values to make them positive, the function will automatically add the minimum constant required to make all the data values positive. 
+
+```{r}
+powers::boxcox.transform(x = -5:5, lambda = c(0,1))
+```
+
+That said, the user could specify what constant they wish to add to each x value to make them all positive using the makepos parameter. 
+
+```{r}
+powers::boxcox.transform(x = -5:5, lambda = c(0,1), makepos = 10)
+```
+
 
 ## For Developers
 

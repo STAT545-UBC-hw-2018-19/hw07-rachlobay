@@ -1,0 +1,6 @@
+boxcox.tranform.mat     Box-Cox Transform Matrix of Values Function
+boxcox.transform        Box-Cox Transform Function
+pow                     Generic Power Function
+powers                  Convenient Computation of Powers
+square                  Apply a useful power
+tenvec                  Integer vector from 1 to 10

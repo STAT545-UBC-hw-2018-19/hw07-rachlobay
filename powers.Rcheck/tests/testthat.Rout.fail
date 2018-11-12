@@ -1,0 +1,92 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(powers)
+> 
+> test_check("powers")
+[31m──[39m [31m1. Error: a single postive, zero, or ne[39m
+there is no package called 'foreign'
+1: expect_identical(boxcox.transform(x, lambda4), 
+       car:::bcPower(x, lambda4)) at testthat/test_boxcoxtransform.R:10
+2: quasi_label(enquo(expected), expected.label)
+3: eval_bare(get_expr(quo), get_env(quo))
+4: car:::bcPower
+5: get(name, envir = asNamespace(pkg), inherits = FALSE)
+6: asNamespace(pkg)
+7: getNamespace(ns)
+8: tryCatch(loadNamespace(name), error = function(e) stop(e))
+9: tryCatchList(expr, classes, parentenv, handlers)
+10: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+11: value[[3L]](cond)
+
+[31m──[39m [31m2. Error: a vector of lambda values wor[39m
+there is no package called 'foreign'
+1: expect_identical(boxcox.transform(x, lambda_vec_02), 
+       car:::bcPower(matrix(rep(x, length(lambda_vec_02)), 
+           ncol = length(lambda_vec_02)), lambda_vec_02)) at testthat/test_boxcoxtransform.R:21
+2: quasi_label(enquo(expected), expected.label)
+3: eval_bare(get_expr(quo), get_env(quo))
+4: car:::bcPower
+5: get(name, envir = asNamespace(pkg), inherits = FALSE)
+6: asNamespace(pkg)
+7: getNamespace(ns)
+8: tryCatch(loadNamespace(name), error = function(e) stop(e))
+9: tryCatchList(expr, classes, parentenv, handlers)
+10: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+11: value[[3L]](cond)
+
+[31m──[39m [31m3. Error: a vector of lambda values wor[39m
+there is no package called 'foreign'
+1: expect_identical(boxcox.transform(x, lambda_vec_02), 
+       car:::bcPower(matrix(rep(x, length(lambda_vec_02)), 
+           ncol = length(lambda_vec_02)), lambda_vec_02)) at testthat/test_boxcoxtransform.R:31
+2: quasi_label(enquo(expected), expected.label)
+3: eval_bare(get_expr(quo), get_env(quo))
+4: car:::bcPower
+5: get(name, envir = asNamespace(pkg), inherits = FALSE)
+6: asNamespace(pkg)
+7: getNamespace(ns)
+8: tryCatch(loadNamespace(name), error = function(e) stop(e))
+9: tryCatchList(expr, classes, parentenv, handlers)
+10: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+11: value[[3L]](cond)
+
+[31m──[39m [31m4. Error: a vector of negative x values[39m
+there is no package called 'foreign'
+1: expect_identical(boxcox.transform(x, lambda_2), 
+       car:::bcPower(x + 6, lambda_2)) at testthat/test_boxcoxtransform.R:40
+2: quasi_label(enquo(expected), expected.label)
+3: eval_bare(get_expr(quo), get_env(quo))
+4: car:::bcPower
+5: get(name, envir = asNamespace(pkg), inherits = FALSE)
+6: asNamespace(pkg)
+7: getNamespace(ns)
+8: tryCatch(loadNamespace(name), error = function(e) stop(e))
+9: tryCatchList(expr, classes, parentenv, handlers)
+10: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+11: value[[3L]](cond)
+
+══ testthat results  ═════════════════════
+OK: 5 SKIPPED: 0 FAILED: 4
+1. Error: a single postive, zero, or negative lambda works (@test_boxcoxtransform.R#10) 
+2. Error: a vector of lambda values works. (@test_boxcoxtransform.R#21) 
+3. Error: a vector of lambda values works. (@test_boxcoxtransform.R#31) 
+4. Error: a vector of negative x values will be made positive automatically and manually by boxcox.transform. (@test_boxcoxtransform.R#40) 
+
+Error: testthat unit tests failed
+Execution halted

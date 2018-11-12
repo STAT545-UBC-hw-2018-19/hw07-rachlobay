@@ -21,7 +21,6 @@ boxcox.transform <- function(x, lambda = 0, makepos = 0) {
 # Negative x-value automatic change of makepos argument to add the minimum constant to make all x values non-negative
     if(any(x < 0)){
         x = x + abs(min(x)) + 1
-        warning("Warning: The minimum constant value was automatically added to each data value to make all data values positive.")
     }
 
 # Box-Cox Function Computations
