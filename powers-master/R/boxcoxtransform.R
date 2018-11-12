@@ -12,9 +12,12 @@
 boxcox.transform <- function(x, lambda = 0, makepos = 0) {
 # Common error checks
     if(any(x < 0)) stop("Negative x-value(s). Change makepos argument of function to add a constant to make all x values positive.")
-    if((makepos< 0)) stop("Nice try, but makepos value must be non-negative.")
+    if((makepos < 0)) stop("Nice try, but makepos value must be non-negative.")
 
 # Box-Cox Function Computations
-    if(lambda == 0) return(log(x))
-    else return (ifelse(is.vector(lambda), , (x^lambda - 1) / lambda))
+    if(length(lambda) != 1) return(boxcox.tranform.mat(x, lambda))
+    else{
+        if(lambda == 0) return((log(x)))
+        else return(((x^lambda - 1) / lambda))
+    }
 }

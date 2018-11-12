@@ -10,11 +10,11 @@
 #' @param lambda vector of values that indicate the strength of the box-cox transformation
 #'
 #' @return a matrix of the `x` values that underwent box-cox transformation for different lambdas. The entries of a column correspond to a particular lambda value. Hence, the columns are named to reflect what lambda value was used.
-values_mat = matrix(rep(x,length(lambda)), ncol = length(lambda)) # define a values matrix
-colnames(values_mat) <- lambda # replace column names of values matrix by the corresponding lambda values
-
 # fill in the matrix of values with the box-cox transformed values for each lambda
 boxcox.tranform.mat <- function(x, lambda = 0) {
+    values_mat = matrix(rep(x,length(lambda)), ncol = length(lambda)) # define a values matrix
+    colnames(values_mat) <- lambda # replace column names of values matrix by the corresponding lambda values
+
     for(i in 1:length(lambda)){
     if(lambda[i] != 0) values_mat[,i] = (x^lambda[i] - 1) / lambda[i]
     else(values_mat[,i] = log(x))
