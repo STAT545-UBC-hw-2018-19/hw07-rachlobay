@@ -23,5 +23,4 @@ The aim is to hit the following elements for this assignment:
 
 |               | Quick and important links|
 | ------------- |-------------|
-|  :heavy_check_mark: | [Building powers R package (.Rmd)]()| 
-|  :heavy_check_mark: | [Building powers R package (.md)]()| 
+|  :heavy_check_mark: | [R powers package](https://github.com/STAT545-UBC-students/hw07-rachlobay/tree/master/powers-master)| 
