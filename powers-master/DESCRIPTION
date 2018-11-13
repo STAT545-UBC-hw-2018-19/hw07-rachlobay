@@ -13,7 +13,11 @@ LazyData: true
 RoxygenNote: 6.1.0
 Suggests: testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    foreign,
+    car,
+    BIGL,
+    bimixt
 Imports: ggplot2
 VignetteBuilder: knitr
 Depends: R(>= 2.10.0)
