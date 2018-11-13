@@ -2,8 +2,10 @@ Package: powers
 Type: Package
 Title: Convenient Computation of Powers
 Version: 0.1.0
-Authors@R: person("Vincenzo", "Coia", email="vincen.coia@stat.ubc.ca",
-    role=c("aut", "cre"))
+Authors@R: c(person("Vincenzo", "Coia", email="vincen.coia@stat.ubc.ca",
+    role=c("aut", "cre")), 
+    person("Rachel", "Lobay", email="rachel.lobay@stat.ubc.ca",
+    role=c("aut")))
 Description: Are you tired of using the power operator in R?
     Use this package to call functions that apply common powers
     to your vectors. 
