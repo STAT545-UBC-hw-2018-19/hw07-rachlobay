@@ -22,6 +22,7 @@ Suggests:
 Imports: 
     ggplot2,
     bimixt (>= 1.0),
-    car
+    car,
+    devtools
 VignetteBuilder: knitr
 Depends: R(>= 2.10.0)
