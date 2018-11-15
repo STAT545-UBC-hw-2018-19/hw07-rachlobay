@@ -1,5 +1,5 @@
-install.packages("foreign",  repos='http://cran.us.r-project.org')
-library(foreign)
+#install.packages("foreign", repos = "http://cran.us.r-project.org")
+#library(foreign)
 context("Box cox transformations for different x and lambdas.")
 
 test_that("a single positive, zero, or negative lambda works", {

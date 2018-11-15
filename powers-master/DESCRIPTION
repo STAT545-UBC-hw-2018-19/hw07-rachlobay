@@ -13,13 +13,15 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
-Suggests: testthat,
+Suggests: 
+    testthat,
     knitr,
     rmarkdown,
-    foreign,
-    car,
     BIGL,
-    bimixt
-Imports: ggplot2
+    foreign
+Imports: 
+    ggplot2,
+    bimixt (>= 1.0),
+    car
 VignetteBuilder: knitr
 Depends: R(>= 2.10.0)
